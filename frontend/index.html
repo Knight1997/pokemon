@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pokémon</h1>
+        </header>
+
+        <!-- List View -->
+        <div id="list-view" class="view">
+            <div id="pokemon-grid" class="pokemon-grid">
+                <!-- Pokémon cards will be inserted here -->
+            </div>
+            <div id="loading" class="loading">Loading...</div>
+        </div>
+
+        <!-- Detail View -->
+        <div id="detail-view" class="view hidden">
+            <button id="back-button" class="back-button">← Back</button>
+            <div id="pokemon-detail" class="pokemon-detail">
+                <!-- Pokémon details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
