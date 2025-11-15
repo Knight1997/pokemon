@@ -23,13 +23,11 @@ function showDetailView() {
 // Fetch Pokémon list
 async function fetchPokemonList() {
     try {
-        loading.style.display = 'block';
+        loading.style.display = 'flex';
         pokemonGrid.innerHTML = '';
         
         const response = await fetch(`${API_BASE_URL}/pokemon`);
         const data = await response.json();
-        
-        loading.style.display = 'none';
         
         // Fetch details for each Pokémon to get images
         const pokemonPromises = data.results.map(pokemon => 
@@ -38,6 +36,8 @@ async function fetchPokemonList() {
         
         const pokemonDetails = await Promise.all(pokemonPromises);
         
+        loading.style.display = 'none';
+        
         pokemonDetails.forEach(pokemon => {
             if (pokemon) {
                 createPokemonCard(pokemon);
@@ -45,7 +45,7 @@ async function fetchPokemonList() {
         });
     } catch (error) {
         console.error('Error fetching Pokémon list:', error);
-        loading.textContent = 'Error loading Pokémon. Please try again.';
+        loading.innerHTML = '<p>Error loading Pokémon. Please try again.</p>';
     }
 }
 
@@ -82,20 +82,27 @@ function createPokemonCard(pokemon) {
 // Show Pokémon detail
 async function showPokemonDetail(name) {
     try {
-        pokemonDetail.innerHTML = '<div class="loading">Loading...</div>';
+        pokemonDetail.innerHTML = `
+            <div class="loading">
+                <div class="loader">
+                    <div class="pokeball"></div>
+                </div>
+                <p>Loading...</p>
+            </div>
+        `;
         showDetailView();
         
         const pokemon = await fetchPokemonDetail(name);
         
         if (!pokemon) {
-            pokemonDetail.innerHTML = '<div class="loading">Pokémon not found</div>';
+            pokemonDetail.innerHTML = '<div class="loading"><p>Pokémon not found</p></div>';
             return;
         }
         
         renderPokemonDetail(pokemon);
     } catch (error) {
         console.error('Error showing Pokémon detail:', error);
-        pokemonDetail.innerHTML = '<div class="loading">Error loading Pokémon details</div>';
+        pokemonDetail.innerHTML = '<div class="loading"><p>Error loading Pokémon details</p></div>';
     }
 }
 
